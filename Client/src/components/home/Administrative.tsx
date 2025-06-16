@@ -52,7 +52,6 @@ const Administrative = () => {
           {/* Content Side */}
           <div>
             <AnimatedSection animation="slide-up">
-              <h5 className="text-estg-blue font-medium mb-3">Administrative LIFE</h5>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
                 Experience Our World-Class Facilities
               </h2>
