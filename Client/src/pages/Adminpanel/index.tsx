@@ -142,7 +142,7 @@ function Adminpanel() {
           className={`fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-estg-gray-light dark:bg-black border-r shadow-md z-30 transform transition-transform duration-200 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
             } md:translate-x-0`}
         >
-          <nav className="flex flex-col gap-2 p-4 bg-estg-gray-light dark:bg-black">
+          <nav className="flex flex-col gap-2 p-4 pt-7 bg-estg-gray-light dark:bg-black">
             {tabs.map((tab, index) => (
               <button
                 key={index}

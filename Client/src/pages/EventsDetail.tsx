@@ -31,14 +31,13 @@ export default function NewsDetailPage() {
   const navigate = useNavigate();
   const [otherNews, setOtherNews] = useState<NewsItem[]>([]);
   const [visibleNewsCount, setVisibleNewsCount] = useState(3);
-
   const [data, setData] = useState<NewsItem | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`${API_URL}/single_event/${id}`);
         setData(response.data);
         console.log("API response:", response.data);
@@ -71,25 +70,58 @@ export default function NewsDetailPage() {
     setVisibleNewsCount((prev) => prev + 3);
   };
 
+  // Skeleton Component for Main Event
+  const SkeletonMainEvent = () => (
+    <div className="max-w-4xl mt-10 mb-20 mx-auto">
+      <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2 animate-pulse" />
+      <div className="w-full h-[400px] bg-gray-200 dark:bg-gray-700 rounded-lg mb-6 animate-pulse" />
+      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-2 animate-pulse" />
+      <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2 animate-pulse" />
+      <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-5/6 animate-pulse" />
+    </div>
+  );
 
-  if (loading) return <div className="p-8 text-center">Loading...</div>;
-  if (!data) return <NotFound />
+  // Skeleton Component for Other News Card
+  const SkeletonNewsCard = () => (
+    <div className="rounded-lg shadow overflow-hidden">
+      <div className="h-48 w-full bg-gray-200 dark:bg-gray-700 animate-pulse" />
+      <div className="p-4">
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-2 animate-pulse" />
+        <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 animate-pulse" />
+      </div>
+    </div>
+  );
+
+  if (loading) {
+    return (
+      <section className="py-16 px-6">
+        <Navbar />
+        <SkeletonMainEvent />
+        <div className="max-w-6xl mx-auto mt-20 mb-10 px-10 ml-20">
+          <h2 className="text-2xl font-semibold mb-6">More News</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[...Array(3)].map((_, index) => (
+              <SkeletonNewsCard key={index} />
+            ))}
+          </div>
+        </div>
+        <Footer />
+      </section>
+    );
+  }
+
+  if (!data) return <NotFound />;
 
   return (
-
     <section className="py-16 px-6">
       {/* 🔍 SEO + Social Media Meta Tags */}
       <Helmet>
         <title>Event Details | ESTG-TSS</title>
         <meta key="description" name="description" content="View detailed information about this ESTG-TSS event, including date, description, and related news. Stay informed and connected with our school community." />
-
-        {/* Open Graph Meta Tags */}
         <meta key="og:title" property="og:title" content="Event Details | ESTG-TSS" />
         <meta key="og:description" property="og:description" content="Explore details of this event at ESTG-TSS. Learn more about our latest activities, workshops, and celebrations." />
         <meta key="og:url" property="og:url" content="https://estg-tss.vercel.app/events/detail" />
         <meta key="og:image" property="og:image" content="https://estg-tss.vercel.app/assets/hero_image.jpg" />
-
-        {/* Twitter Card Meta Tags */}
         <meta key="twitter:card" name="twitter:card" content="summary_large_image" />
         <meta key="twitter:title" name="twitter:title" content="Event Details | ESTG-TSS" />
         <meta key="twitter:description" name="twitter:description" content="Get all the details about this ESTG-TSS event. Stay up to date with our school’s latest happenings." />
@@ -97,36 +129,36 @@ export default function NewsDetailPage() {
       </Helmet>
       <Navbar />
       <div className="max-w-4xl mt-10 mb-20 mx-auto">
-        <h1 className="text-4xl font-bold mb-2 uppercase">{data.title}</h1>
-        <img src={data.imageUrl}
-          alt={data.title} className="w-full rounded-lg mb-6" />
-        <p className="text-sm text-gray-800 mb-2">{new Date(data.createdAt).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })}</p>
-        <p className="text-gray-700">{data.description}</p>
-
+        <h1 className="text-2xl font-bold mb-2 uppercase">{data.title}</h1>
+        <img src={data.imageUrl} alt={data.title} className="w-full rounded-lg mb-6" />
+        <p className="text-sm text-black dark:text-white mb-2">
+          {new Date(data.createdAt).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </p>
+        <p className="text-black dark:text-white">{data.description}</p>
       </div>
-      <div className="max-w-6xl mx-auto mt-20 mb-10 px-10 ml-20">
+      <div className="max-w-6xl mx-auto mt-20 mb-10 px-10 md:ml-20">
         <h2 className="text-2xl font-semibold mb-6">More News</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 cursor-pointer gap-6">
           {otherNews.slice(0, visibleNewsCount).map((item) => (
             <div
               key={item.id}
               onClick={() => navigate(`/news/${item.id}`)}
-              className="cursor-pointer rounded-lg shadow hover:shadow-lg transition overflow-hidden"
+              className="cursor-pointer rounded-lg shadow-sm dark:shadow-[#333] transition overflow-hidden"
             >
               <img src={item.imageUrl || Future} alt={item.title} className="h-48 w-full object-cover" />
               <div className="p-4">
-                <p className="text-sm text-gray-800">
+                <p className="text-sm text-black dark:text-white">
                   {new Date(item.createdAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
                   })}
                 </p>
-                <h3 className="text-lg font-bold mt-1 text-gray-400 uppercase">{item.title}</h3>
+                <h3 className="text-lg font-bold mt-1 text-black dark:text-white uppercase">{item.title}</h3>
               </div>
             </div>
           ))}
