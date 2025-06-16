@@ -109,7 +109,7 @@ const ViewContentCreators = () => {
         <meta key="twitter:description" name="twitter:description" content="Manage and organize all content creators for ESTG-TSS from the admin panel. Keep your contributors up to date." />
         <meta key="twitter:image" name="twitter:image" content="https://estg-tss.vercel.app/assets/hero_image.jpg" />
       </Helmet>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 mt-7">
         <Link
           to="/contentcreatorregistration"
           className="flex bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 w-40 h-8 items-center justify-center rounded-sm text-white transition-colors"
