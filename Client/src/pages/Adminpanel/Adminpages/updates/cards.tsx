@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pencil, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Pencil, Trash2, ChevronDown, ChevronUp, Download } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 
 function StoryCard({ title, description, author, id, updatestype, fileUrl, onUpdate, onDelete }) {
@@ -12,7 +12,6 @@ function StoryCard({ title, description, author, id, updatestype, fileUrl, onUpd
 
   return (
     <div className={`w-full bg-estg-gray-light dark:bg-black border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md p-6 space-y-2 transition-all duration-300 flex flex-col justify-between ${!isExpanded ? 'h-[430px]' : 'h-auto'}`}>
-  
       {/* Header */}
       <div className="text-xl dark:text-white font-semibold text-gray-800 mb-2">
         {title}
@@ -50,7 +49,7 @@ function StoryCard({ title, description, author, id, updatestype, fileUrl, onUpd
           rel="noopener noreferrer"
           className="text-sm mt-3 text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-2"
         >
-          📥 Download Attachment
+          <Download size={16} /> Download Attachment
         </a>
       )}
 
