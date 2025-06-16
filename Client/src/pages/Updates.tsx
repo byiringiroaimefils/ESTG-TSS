@@ -91,6 +91,7 @@ const Announcement = () => {
 
       <Navbar />
       <section className="py-20 text-center">
+
         <AnimatedSection>
           <h1 className="text-4xl font-bold mb-4 text-black dark:text-white">School Updates</h1>
           <p className="text-black dark:text-white max-w-xl mx-auto mb-12">

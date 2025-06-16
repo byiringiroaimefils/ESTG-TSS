@@ -183,7 +183,8 @@ function User() {
               </div>
 
               {/* Remember Me & Forgot Password */}
-              <div className="flex items-center justify-between md:flex-row flex-col gap-4">
+              {/* <div className=""> */}
+              <div className=" flex items-center justify-between">
                 <div className="flex items-center">
                   <input
                     id="remember-me"
@@ -197,16 +198,17 @@ function User() {
                   >
                     Remember me
                   </label>
-                  <div className="flex justify-between ">
-                    <h2>
-                      <a href="/forgetpassword" className="text-blue-400 flex">
-                        forget password
-                      </a>
-                    </h2>
-                  </div>
                 </div>
-
+                <div className="flex justify-between ">
+                  <h2>
+                    <a href="/forgetpassword" className="text-blue-400 flex">
+                      Forget password
+                    </a>
+                  </h2>
+                </div>
               </div>
+
+              {/* </div> */}
             </div>
 
             {/* Submit Button */}

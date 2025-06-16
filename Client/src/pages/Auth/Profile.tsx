@@ -109,7 +109,7 @@ function Profile() {
         <meta name="twitter:description" content="Control content and users from the admin panel of ESTG-TSS." />
         <meta name="twitter:image" content="https://estg-tss.vercel.app/assets/hero_image.jpg" />
       </Helmet>
-      <div className="bg-white dark:bg-black dark:shadow-gray-800 rounded-lg shadow-lg p-6">
+      <div className="bg-white dark:bg-black shadow-sm dark:shadow-[#333] shadow-gray-400  rounded-lg shadow-lg p-6">
         <div className="flex flex-col items-center">
           <Avatar className="h-24 w-24 mb-4">
             <AvatarImage

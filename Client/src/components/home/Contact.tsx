@@ -166,7 +166,7 @@ const Contact = () => {
                         {item.icon}
                       </div>
                       <div className="flex flex-col">
-                        <h4 className="font-medium mb-0.5 text-white dark:text-white text-start">{item.title}</h4>
+                        <h4 className="font-medium mb-0.5  dark:text-white t text-start">{item.title}</h4>
                         <p className="text-sm text-muted-foreground dark:text-gray-300">
                           {item.details}
                         </p>

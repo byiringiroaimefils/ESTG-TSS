@@ -120,7 +120,7 @@ function AdminForm() {
       </button>
       {/* Centered Form Container - flex-grow will make it take available space */}
       <div className="flex-grow flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-md space-y-8 p-8 rounded-lg shadow-md shadow-gray-400 bg-white dark:bg-black border border-gray-200 dark:border-gray-700">
+        <div className="w-full max-w-md space-y-8 p-8 rounded-lg shadow-sm dark:shadow-[#333] shadow-gray-400 bg-white dark:bg-black border border-gray-200 dark:border-gray-700">
           {/* Form Header */}
           <div className="text-center">
             <h1 className="text-3xl font-bold dark:text-gray-200 text-gray-800">
@@ -185,7 +185,7 @@ function AdminForm() {
                 <div className="flex justify-between ">
                   <h2>
                     <a href="/forgetpassword" className="text-blue-400 flex">
-                      forget password
+                      Forget password
                     </a>
                   </h2>
                 </div>
@@ -198,16 +198,15 @@ function AdminForm() {
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                Submit
+                Sign in
               </button>
               <div className="ml-[250px]"></div>
             </div>
             <div>
               <h1 className=" flex justify-center text-black dark:text-white ">
-                {" "}
-                Login as?{" "}
+                Sign in as
                 <Link to="/user" className="text-blue-400 flex">
-                  <span className="ml-4">content creator</span>{" "}
+                  <span className="ml-4">Content Creator</span>
                 </Link>
               </h1>
             </div>
