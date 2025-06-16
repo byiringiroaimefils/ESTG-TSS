@@ -183,7 +183,7 @@ function Adminpanel() {
                   src={dashboardData?.avatar || ''}
                   alt={dashboardData?.user || 'User'}
                 />
-                <AvatarFallback className="rounded-lg">
+                <AvatarFallback className="rounded-[50%] bg-slate-300 font-bold dark:bg-[#333]">
                   {dashboardData?.user?.charAt(0) || 'A'}
                 </AvatarFallback>
               </Avatar>

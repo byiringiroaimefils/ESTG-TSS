@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet';  
 
-
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface ImportMetaEnv {
@@ -37,7 +36,6 @@ const ViewContentCreators = () => {
   }, []);
 
   const handleDelete = async (id: string, username: string) => {
-    // Show confirmation toast
     toast.info(
       <div className="p-2">
         <p className="font-semibold mb-2">Delete {username}?</p>
@@ -90,20 +88,63 @@ const ViewContentCreators = () => {
     );
   };
 
+  // Skeleton Table Row Component
+  const SkeletonTableRow = () => (
+    <tr className="border-t border-gray-200 dark:border-gray-700">
+      <td className="px-6 py-4">
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-8 animate-pulse" />
+      </td>
+      <td className="px-6 py-4">
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-32 animate-pulse" />
+      </td>
+      <td className="px-6 py-4">
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-48 animate-pulse" />
+      </td>
+      <td className="px-6 py-4">
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24 animate-pulse" />
+      </td>
+      <td className="px-6 py-4">
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-32 animate-pulse" />
+      </td>
+      <td className="px-6 py-4">
+        <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-20 animate-pulse" />
+      </td>
+    </tr>
+  );
+
+  // Skeleton Mobile Card Component
+  const SkeletonMobileCard = () => (
+    <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-600 rounded-lg p-4 shadow-sm">
+      <div className="flex justify-between items-start">
+        <div>
+          <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-32 mb-2 animate-pulse" />
+          <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-20 animate-pulse" />
+        </div>
+        <div className="h-8 w-8 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+      </div>
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        <div>
+          <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-16 mb-1 animate-pulse" />
+          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-36 animate-pulse" />
+        </div>
+        <div>
+          <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-16 mb-1 animate-pulse" />
+          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24 animate-pulse" />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 gap-5 flex flex-col dark:bg-black min-h-screen">
-       {/* 🔍 SEO + Social Media Meta Tags */}
-            <Helmet>
+      {/* 🔍 SEO + Social Media Meta Tags */}
+      <Helmet>
         <title>Content Creators | ESTG-TSS</title>
         <meta key="description" name="description" content="Manage and review all content creators for ESTG-TSS. Use this admin panel to organize, add, or update content creators and their contributions to the school community." />
-
-        {/* Open Graph Meta Tags */}
         <meta key="og:title" property="og:title" content="Content Creators | ESTG-TSS" />
         <meta key="og:description" property="og:description" content="Access and manage all content creators for ESTG-TSS from the admin panel. Organize and update contributors easily." />
         <meta key="og:url" property="og:url" content="https://estg-tss.vercel.app/admin/content-creators" />
         <meta key="og:image" property="og:image" content="https://estg-tss.vercel.app/assets/hero_image.jpg" />
-
-        {/* Twitter Card Meta Tags */}
         <meta key="twitter:card" name="twitter:card" content="summary_large_image" />
         <meta key="twitter:title" name="twitter:title" content="Content Creators | ESTG-TSS" />
         <meta key="twitter:description" name="twitter:description" content="Manage and organize all content creators for ESTG-TSS from the admin panel. Keep your contributors up to date." />
@@ -135,17 +176,13 @@ const ViewContentCreators = () => {
 
       <div className="bg-white dark:bg-black shadow-md rounded-lg overflow-hidden">
         {loading ? (
-          <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-            Loading...
-          </div>
-        ) : data.length > 0 ? (
           <>
-            {/* Desktop Table */}
+            {/* Desktop Skeleton Table */}
             <div className="hidden sm:block">
-              <table className="min-w-full divide-y divide-gray-200 bg-white dark:bg-black">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-black">
                 <thead className="bg-white dark:bg-black">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                       No
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
@@ -154,13 +191,55 @@ const ViewContentCreators = () => {
                     <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                       Email
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                       Role
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                       Backup code
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800">
+                  {[...Array(5)].map((_, index) => (
+                    <SkeletonTableRow key={index} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Skeleton Cards */}
+            <div className="sm:hidden space-y-3 p-3">
+              {[...Array(5)].map((_, index) => (
+                <SkeletonMobileCard key={index} />
+              ))}
+            </div>
+          </>
+        ) : data.length > 0 ? (
+          <>
+            {/* Desktop Table */}
+            <div className="hidden sm:block">
+              <table className="min-w-full divide-y divide-gray-200 bg-white dark:bg-black">
+                <thead className="bg-white dark:bg-black">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                      No
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                      Email
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                      Role
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                      Backup code
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                       Action
                     </th>
                   </tr>
@@ -192,27 +271,26 @@ const ViewContentCreators = () => {
           </>
         ) : (
           <div className="col-span-full flex flex-col items-center justify-center text-center py-20 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-          <svg
-            className="w-16 h-16 mb-4 text-gray-400 dark:text-gray-500"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 8v4l3 3m6 1a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <h2 className="text-2xl font-semibold text-gray-700 dark:text-white mb-2">
-            No Content Creators Available
-          </h2>
-          <p className="text-gray-500 dark:text-gray-400 max-w-md">
-            You haven't added any content creators yet. Click "Add Content Creator" to get
-            started.
-          </p>
-        </div>
+            <svg
+              className="w-16 h-16 mb-4 text-gray-400 dark:text-gray-500"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 8v4l3 3m6 1a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <h2 className="text-2xl font-semibold text-gray-700 dark:text-white mb-2">
+              No Content Creators Available
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-md">
+              You haven't added any content creators yet. Click "Add Content Creator" to get started.
+            </p>
+          </div>
         )}
       </div>
     </div>
@@ -220,7 +298,7 @@ const ViewContentCreators = () => {
 };
 
 const TableRow = ({ item, index, onDelete }) => (
-  <tr className="dark:bg-black hover:bg-gray-50 dark:hover:bg-gray-700 border-spacing-1 transition-colors">
+  <tr className="dark:bg-black hover:bg-gray-200 dark:hover:bg-[#222222] transition-colors">
     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
       {index + 1}
     </td>
@@ -239,7 +317,7 @@ const TableRow = ({ item, index, onDelete }) => (
     <td className="px-6 py-4 whitespace-nowrap text-sm">
       <button
         className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-xs transition-colors flex items-center"
-        onClick={() => onDelete(item._id)}
+        onClick={() => onDelete(item._id, item.username)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -272,7 +350,7 @@ const MobileCard = ({ item, index, onDelete }) => (
       </div>
       <button
         className="bg-red-600 hover:bg-red-700 text-white p-1 rounded-md transition-colors"
-        onClick={() => onDelete(item._id)}
+        onClick={() => onDelete(item._id, item.username)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
