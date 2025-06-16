@@ -40,26 +40,9 @@ function Card({
 
   return (
     <div
-      className={`max-w-md mx-auto bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md p-4 flex flex-col transition-all duration-300 ${isExpanded ? "h-auto" : "h-[330px]"
+      className={`max-w-md mx-auto dark:bg-black border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md p-4 flex flex-col transition-all duration-300 ${isExpanded ? "h-auto" : "h-[330px]"
         } overflow-hidden`}
     >
-      {/* 🔍 SEO + Social Media Meta Tags */}
-      <Helmet>
-        <title>Event Cards | ESTG-TSS</title>
-        <meta key="description" name="description" content="View, edit, and manage all event cards for ESTG-TSS. This admin panel component allows you to efficiently organize and maintain school events and activities." />
-
-        {/* Open Graph Meta Tags */}
-        <meta key="og:title" property="og:title" content="Event Cards | ESTG-TSS" />
-        <meta key="og:description" property="og:description" content="Manage and organize event cards for ESTG-TSS events and activities in the admin panel." />
-        <meta key="og:url" property="og:url" content="https://estg-tss.vercel.app/admin/event-cards" />
-        <meta key="og:image" property="og:image" content="https://estg-tss.vercel.app/assets/hero_image.jpg" />
-
-        {/* Twitter Card Meta Tags */}
-        <meta key="twitter:card" name="twitter:card" content="summary_large_image" />
-        <meta key="twitter:title" name="twitter:title" content="Event Cards | ESTG-TSS" />
-        <meta key="twitter:description" name="twitter:description" content="Easily manage and organize event cards for ESTG-TSS events and activities from the admin panel." />
-        <meta key="twitter:image" name="twitter:image" content="https://estg-tss.vercel.app/assets/hero_image.jpg" />
-      </Helmet>
       <img
         src={imageUrl || "https://via.placeholder.com/150"}
         alt="Event"
