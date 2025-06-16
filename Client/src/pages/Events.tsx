@@ -5,6 +5,8 @@ import AnimatedSection from '../components/ui/AnimatedSection';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
+import { Search } from 'lucide-react';
+
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -66,16 +68,20 @@ const News = () => {
       </Helmet>
       <Navbar />
 
-      <section className="py-20 text-center">
-        <AnimatedSection>
-          <h1 className="text-4xl font-bold mb-4 text-black dark:text-white">Upcoming Events</h1>
-          <p className="text-black dark:text-white max-w-xl mx-auto mb-12">
-            Join us for exciting school activities, workshops, and celebrations! Stay updated on upcoming events and mark your calendars—we can't wait to see you there.
-          </p>
-        </AnimatedSection>
-
+      <section className="text-center">
+        {/* Head of the page */}
+        <div className="pt-20 bg-estg-gray-light dark:bg-black pb-4">
+          <AnimatedSection>
+            <h1 className="text-4xl font-bold mb-4 text-black dark:text-white">Upcoming Events</h1>
+            <p className="text-black dark:text-white max-w-xl mx-auto mb-12">
+              Join us for exciting school activities, workshops, and celebrations! Stay updated on upcoming events and mark your calendars—we can't wait to see you there.
+            </p>
+          </AnimatedSection>
+        </div>
+        <br />
         {/* Search bar */}
-        <div className="max-w-md mx-auto mb-10 px-6">
+        <div className="relative w-[90%] max-w-xl mx-auto mb-12">
+
           <input
             type="text"
             placeholder="Search events..."
@@ -83,6 +89,8 @@ const News = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full px-12 py-3 rounded-md shadow-sm shadow-gray-400 bg-white dark:bg-black border border-gray-300 dark:border-gray-700"
           />
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-300 w-5 h-5" />
+
         </div>
 
         {filteredData && filteredData.length > 0 ? (

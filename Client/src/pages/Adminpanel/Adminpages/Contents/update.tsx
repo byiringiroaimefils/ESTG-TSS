@@ -4,12 +4,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet';  
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -164,13 +158,13 @@ const Update = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="text-xl dark:text-gray-200">Loading...</div>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+  //       <div className="text-xl dark:text-gray-200">Loading...</div>
+  //     </div>
+  //   );
+  // }
 
   const isImageFile = previewUrl && (previewUrl.startsWith('http') || previewUrl.startsWith('data:image'));
 
@@ -214,7 +208,7 @@ const Update = () => {
       </button>
 
       <div className="flex-grow flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-md space-y-8 p-8 rounded-lg shadow-md shadow-gray-400 bg-white dark:bg-black border border-gray-200 dark:border-gray-700">
+        <div className="w-full max-w-md space-y-8 p-8 rounded-lg shadow-md  bg-white dark:bg-black border border-gray-200 dark:border-gray-700">
           <div className="text-center">
             <h1 className="text-3xl font-bold dark:text-gray-200 text-gray-800">
               {isEditMode ? "Edit Update" : "Create New Update"}

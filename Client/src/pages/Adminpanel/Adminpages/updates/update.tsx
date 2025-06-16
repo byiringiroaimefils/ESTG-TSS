@@ -21,11 +21,9 @@ function Update() {
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const fetchData = async () => {
-    setLoading(true);
     try {
       const response = await axios.get(`${API_URL}/updates`, {
         withCredentials: true,
@@ -35,8 +33,6 @@ function Update() {
     } catch (error) {
       console.log(error);
       toast.error('Failed to fetch updates', { position: "bottom-right" });
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -73,8 +69,8 @@ function Update() {
 
   return (
     <div className="p-6 mt-5 bg-gray-100 dark:bg-black min-h-screen">
-       {/* 🔍 SEO + Social Media Meta Tags */}
-            <Helmet>
+      {/* 🔍 SEO + Social Media Meta Tags */}
+      <Helmet>
         <title>Admin Updates | ESTG-TSS</title>
         <meta key="description" name="description" content="Manage and review all school updates, announcements, and important information from the ESTG-TSS admin panel. Stay organized and informed as an administrator." />
 
@@ -90,6 +86,7 @@ function Update() {
         <meta key="twitter:description" name="twitter:description" content="Stay up to date and manage all school updates and announcements from the ESTG-TSS admin panel." />
         <meta key="twitter:image" name="twitter:image" content="https://estg-tss.vercel.app/assets/hero_image.jpg" />
       </Helmet>
+      
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <Link to="/createupdate">
           <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium">
@@ -112,23 +109,7 @@ function Update() {
       <h1 className="text-2xl font-bold text-black dark:text-white mb-5 mt-5">Update Cards</h1>
 
       {/* === Conditional Rendering === */}
-      {loading ? (
-        // Loading state
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-fr">
-          {[...Array(4)].map((_, index) => (
-            <div
-              key={index}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 animate-pulse"
-            >
-              <div className="h-40 bg-gray-300 dark:bg-gray-700 rounded-md mb-4"></div>
-              <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded mb-3 w-3/4"></div>
-              <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded mb-2 w-full"></div>
-              <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded mb-2 w-5/6"></div>
-              <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/2"></div>
-            </div>
-          ))}
-        </div>
-      ) : data.length === 0 ? (
+      {data.length === 0 ? (
         <div className="col-span-full flex flex-col items-center justify-center text-center py-20 bg-white dark:bg-gray-800 rounded-lg shadow-md">
           <svg
             className="w-16 h-16 mb-4 text-gray-400 dark:text-gray-500"

@@ -32,8 +32,8 @@ const About = () => {
       <Navbar />
 
       {/* Page Header */}
-      <div className="md:pt-10 pt-20 text-center bg-estg-gray-light dark:bg-black">
-        <div className="py-12 text-center px-4 sm:px-6 lg:px-8">
+      <div className="text-center bg-estg-gray-light dark:bg-black pb-4">
+        <div className="pt-20 text-center px-4 sm:px-6 lg:px-6 xl:px-8">
           <AnimatedSection>
             <h1 className="text-4xl font-bold mb-4 text-black dark:text-white">About Our School</h1>
             <p className="text-black dark:text-white max-w-xl mx-auto mb-12">
@@ -43,9 +43,9 @@ const About = () => {
 
         </div>
       </div>
-
+      <br />
       {/* About Content */}
-      <div className="bg-white dark:bg-black pb-20 px-4 sm:px-6 lg:px-8">
+      <div className=" dark:bg-black pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection animation="fade-in" className="text-center">
             <div className="flex flex-col lg:flex-row gap-8 items-start">

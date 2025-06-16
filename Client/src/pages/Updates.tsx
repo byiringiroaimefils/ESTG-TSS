@@ -80,15 +80,17 @@ const Announcement = () => {
       </Helmet>
 
       <Navbar />
-      <section className="py-20 text-center">
-
-        <AnimatedSection>
-          <h1 className="text-4xl font-bold mb-4 text-black dark:text-white">School Updates</h1>
-          <p className="text-black dark:text-white max-w-xl mx-auto mb-12">
-            Stay informed with the latest news, events, and achievements from our school community. Check back regularly for important announcements and exciting developments in our learning journey together.
-          </p>
-        </AnimatedSection>
-
+      <section className="text-center">
+        {/* Header of the page */}
+        <div className="pt-20 bg-estg-gray-light dark:bg-black pb-4">
+          <AnimatedSection>
+            <h1 className="text-4xl font-bold mb-4 text-black dark:text-white">School Updates</h1>
+            <p className="text-black dark:text-white max-w-xl mx-auto mb-12">
+              Stay informed with the latest news, events, and achievements from our school community. Check back regularly for important announcements and exciting developments in our learning journey together.
+            </p>
+          </AnimatedSection>
+        </div>
+        <br />
         {/* Search bar */}
         <div className="relative w-[90%] max-w-xl mx-auto mb-12">
           <input
