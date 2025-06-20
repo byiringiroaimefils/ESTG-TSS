@@ -53,8 +53,8 @@ const Administrative = () => {
           <AnimatedSection animation="fade-in">
             <div className="max-w-6xl mx-auto space-y-6">
               {/* First Card */}
-              <div className="flex flex-col md:flex-row gap-4  rounded-md p-4 ">
-                <img src={Elysee} alt="activity" className="w-[70%] ml-24 md:w-[300px] h-[350px] md:h-[300px] object-cover rounded-md" />
+              <div className="flex flex-col md:flex-row gap-4 rounded-md p-4 ">
+                <img src={Elysee} alt="activity" className="w-full lg:ml-24 md:w-[300px] h-[350px] md:h-[300px] object-cover rounded-md" />
                 <div className="flex-1 p-2">
                   <div className="flex justify-between items-start">
                     <h2 className="text-xl md:text-2xl font-semibold p-2 md:p-4">Mukunzi Elysee</h2>
@@ -79,8 +79,8 @@ const Administrative = () => {
 
               {/* Second Card */}
               <div className="flex flex-col md:flex-row-reverse gap-4  p-4 ">
-                <img src={Etianee} alt="activity" className="w-[70%] md:mr-28 md:w-[300px] h-[350px] md:h-[300px] object-cover rounded-md" />
-                <div className="flex-1 p-2 ml-24">
+                <img src={Etianee} alt="activity" className="w-full lg:ml-24 md:w-[300px] h-[350px] md:h-[300px] object-cover rounded-md" />
+                <div className="flex-1 p-2 lg:ml-24">
                   <div className="flex justify-between items-start">
                     <h2 className="text-xl md:text-2xl font-semibold md:pb-4">Nzaramyimana Etianee</h2>
                   </div>
@@ -104,7 +104,7 @@ const Administrative = () => {
 
               {/* Third Card */}
               <div className="flex flex-col md:flex-row gap-4  p-4 ">
-                <img src={Marthe} alt="activity" className="w-[70%] ml-24 md:w-[300px] h-[350px] md:h-[300px] object-cover rounded-md" />
+                <img src={Marthe} alt="activity" className="w-full lg:ml-24 md:w-[300px] h-[350px] md:h-[300px] object-cover rounded-md" />
                 <div className="flex-1 p-2">
                   <div className="flex justify-between items-start">
                     <h2 className="text-xl md:text-2xl font-semibold p-2 md:p-4">Uwamahoro Marthe</h2>
@@ -120,7 +120,7 @@ const Administrative = () => {
                         See Less
                       </label>
                     </div>
-                    <label htmlFor="toggle3" className="cursor-pointer text-blue-500 hover:text-blue-600 peer-checked:hidden mt-2 inline-block">
+                    <label htmlFor="toggle3" className="ml-2 cursor-pointer text-blue-500 hover:text-blue-600 peer-checked:hidden mt-2 inline-block">
                       See More
                     </label>
                   </div>
