@@ -19,6 +19,7 @@ interface ImportMeta {
 
 interface NewsItem {
   id: number;
+  _id: number;
   title: string;
   createdAt: string;
   imageUrl: string;
@@ -145,8 +146,8 @@ export default function NewsDetailPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 cursor-pointer gap-6">
           {otherNews.slice(0, visibleNewsCount).map((item) => (
             <div
-              key={item.id}
-              onClick={() => navigate(`/news/${item.id}`)}
+              key={item._id}
+              onClick={() => navigate(`/Event/${item._id}`)}
               className="cursor-pointer rounded-lg shadow-sm dark:shadow-[#333] transition overflow-hidden"
             >
               <img src={item.imageUrl || Future} alt={item.title} className="h-48 w-full object-cover" />
