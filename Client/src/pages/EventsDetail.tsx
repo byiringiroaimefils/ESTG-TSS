@@ -147,7 +147,7 @@ export default function NewsDetailPage() {
           {otherNews.slice(0, visibleNewsCount).map((item) => (
             <div
               key={item._id}
-              onClick={() => navigate(`/Events/${item._id}`)}
+              onClick={() => navigate(`/Event/${item._id}`)}
               className="cursor-pointer rounded-lg shadow-sm dark:shadow-[#333] transition overflow-hidden"
             >
               <img src={item.imageUrl || Future} alt={item.title} className="h-48 w-full object-cover" />
