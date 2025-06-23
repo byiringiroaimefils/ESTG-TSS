@@ -110,7 +110,7 @@ const News = () => {
                 <div
                   key={news._id}
                   className="rounded-sm border overflow-hidden shadow-md hover:shadow-xl transition duration-300"
-                  onClick={() => navigate(`/events/${news._id}`)}
+                  onClick={() => navigate(`/Event/${news._id}`)}
                 >
                   <div className="relative h-[300px]">
                     <img
