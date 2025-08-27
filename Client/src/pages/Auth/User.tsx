@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import axios from "axios";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface ImportMetaEnv {
-  readonly VITE_API_URL: string
+  readonly VITE_API_URL: string;
 }
 
 interface ImportMeta {
-  readonly env: ImportMetaEnv
+  readonly env: ImportMetaEnv;
 }
 
 function User() {
@@ -22,24 +22,40 @@ function User() {
     email: "",
     password: "",
   });
+  const [isCheckingSession, setIsCheckingSession] = useState(true);
 
+  // ✅ Show success message if redirected with a message
   useEffect(() => {
     if (location.state?.message) {
       toast.success(location.state.message, { position: "bottom-right" });
-      navigate('.', { replace: true, state: {} });
+      navigate(".", { replace: true, state: {} });
     }
   }, [location.state, navigate]);
 
+  // ✅ On mount, check if user already has an active session
   useEffect(() => {
-    if (localStorage.getItem("username")) {
-      navigate("/adminpanel");
-    }
+    const checkSession = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/account/dashboard`, {
+          withCredentials: true,
+        });
+        if (res.status === 200 && res.data?.user) {
+          navigate("/adminpanel");
+        }
+      } catch {
+        // not logged in → stay on login
+      } finally {
+        setIsCheckingSession(false);
+      }
+    };
+    checkSession();
   }, [navigate]);
 
   const handleBack = () => {
     navigate("/admin");
   };
-  const handleForm = async (e) => {
+
+  const handleForm = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
@@ -55,19 +71,21 @@ function User() {
       );
 
       if (response.status === 200) {
-        console.log("Login successful", response.data);
+        toast.success("Login successful!", { position: "bottom-right" });
         navigate("/adminpanel");
       } else {
-        console.error("Unexpected response", response.data);
-        toast.error("Login failed. Please try again.", { position: "bottom-right" });
+        toast.error("Login failed. Please try again.", {
+          position: "bottom-right",
+        });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error during login:", error);
 
       if (error.response) {
-        // Server responded with a status outside 2xx
         if (error.response.status === 401) {
-          toast.error("Invalid credentials. Please try again.", { position: "bottom-right" });
+          toast.error("Invalid credentials. Please try again.", {
+            position: "bottom-right",
+          });
         } else {
           toast.error(
             `Error: ${error.response.data?.message || "Server error occurred."}`,
@@ -75,37 +93,61 @@ function User() {
           );
         }
       } else if (error.request) {
-        // No response received
         toast.error(
           "No response from server. Please check your internet connection.",
           { position: "bottom-right" }
         );
       } else {
-        // Other errors
-        toast.error("An unexpected error occurred.", { position: "bottom-right" });
+        toast.error("An unexpected error occurred.", {
+          position: "bottom-right",
+        });
       }
     }
   };
+
+  if (isCheckingSession) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-black">
+        <p className="text-gray-600 dark:text-gray-300">Checking session...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-black">
       {/* 🔍 SEO + Social Media Meta Tags */}
       <Helmet>
         <title>Admin Panel | ESTG-TSS</title>
-        <meta name="description" content="Manage updates, events, and content creators from the admin panel of ESTG-TSS." />
-
-        {/* Open Graph Meta Tags */}
+        <meta
+          name="description"
+          content="Manage updates, events, and content creators from the admin panel of ESTG-TSS."
+        />
         <meta property="og:title" content="Admin Panel | ESTG-TSS" />
-        <meta property="og:description" content="Control content and users from the admin panel of ESTG-TSS." />
-        <meta property="og:url" content="https://estg-tss.vercel.app/admin" />
-        <meta property="og:image" content="https://estg-tss.vercel.app/assets/hero_image.jpg" />
-
-        {/* Twitter Card Meta Tags */}
+        <meta
+          property="og:description"
+          content="Control content and users from the admin panel of ESTG-TSS."
+        />
+        <meta
+          property="og:url"
+          content="https://estg-tss.vercel.app/admin"
+        />
+        <meta
+          property="og:image"
+          content="https://estg-tss.vercel.app/assets/hero_image.jpg"
+        />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Admin Panel | ESTG-TSS" />
-        <meta name="twitter:description" content="Control content and users from the admin panel of ESTG-TSS." />
-        <meta name="twitter:image" content="https://estg-tss.vercel.app/assets/hero_image.jpg" />
+        <meta
+          name="twitter:description"
+          content="Control content and users from the admin panel of ESTG-TSS."
+        />
+        <meta
+          name="twitter:image"
+          content="https://estg-tss.vercel.app/assets/hero_image.jpg"
+        />
       </Helmet>
+
+      {/* Back Button */}
       <button
         onClick={handleBack}
         className="absolute top-4 left-4 bg-gray-500 hover:bg-gray-600 text-white p-2 rounded-full"
@@ -125,19 +167,19 @@ function User() {
           />
         </svg>
       </button>
-      {/* Centered Form Container */}
+
+      {/* Login Form */}
       <div className="flex-grow flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8 p-8 rounded-lg shadow-sm shadow-gray-400 bg-white dark:bg-black border border-gray-200 dark:border-gray-700 ">
-          {/* Form Header */}
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-200 md:text-gray-800">
+            <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">
               Content Creator Login
             </h1>
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
               Please enter your credentials to continue
             </p>
           </div>
-          {/* Form */}
+
           <form className="mt-8 space-y-6" onSubmit={handleForm}>
             <div className="space-y-4">
               {/* Email Field */}
@@ -150,7 +192,9 @@ function User() {
                 </label>
                 <input
                   value={Form.email}
-                  onChange={(e) => setForm({ ...Form, email: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...Form, email: e.target.value })
+                  }
                   type="email"
                   id="email"
                   name="email"
@@ -182,9 +226,8 @@ function User() {
                 />
               </div>
 
-              {/* Remember Me & Forgot Password */}
-              {/* <div className=""> */}
-              <div className=" flex items-center justify-between">
+              {/* Remember Me + Forgot Password */}
+              <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
                     id="remember-me"
@@ -199,16 +242,15 @@ function User() {
                     Remember me
                   </label>
                 </div>
-                <div className="flex justify-between ">
-                  <h2>
-                    <a href="/forgetpassword" className="text-blue-400 flex">
-                      Forget password
-                    </a>
-                  </h2>
+                <div>
+                  <a
+                    href="/forgetpassword"
+                    className="text-blue-400 hover:underline"
+                  >
+                    Forget password
+                  </a>
                 </div>
               </div>
-
-              {/* </div> */}
             </div>
 
             {/* Submit Button */}
@@ -221,7 +263,7 @@ function User() {
               </button>
             </div>
 
-            {/* Alternative Login Option */}
+            {/* Switch to Admin Login */}
             <div className="text-center text-sm">
               <span className="text-gray-600 dark:text-gray-400">
                 Login as admin?{" "}

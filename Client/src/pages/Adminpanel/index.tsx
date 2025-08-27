@@ -98,7 +98,7 @@ function Adminpanel() {
     <div className="min-h-screen bg-estg-gray-light dark:bg-black">
       {/* 🔍 SEO + Meta */}
       <Helmet>
-        <title>Admin Dashboard | ESTG-TSS</title>
+        <title>Admin Dashboard | ESTG-TSS/EPR</title>
         <meta
           key="description"
           name="description"
