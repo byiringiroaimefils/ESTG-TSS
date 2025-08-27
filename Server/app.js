@@ -51,7 +51,7 @@ app.use(session({
     collectionName: 'sessions', // Optional: name of the collection to store sessions
   }),
 
-  cookie: { secure: true, maxAge: 1000 * 60, sameSite: 'none' }
+  cookie: { secure: true, maxAge: 1000 * 60 * 60 * 24 * 30, sameSite: 'none' }
 }));
 
 // Routes
