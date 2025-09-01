@@ -49,10 +49,15 @@ app.use(session({
   store: MongoStore.create({
     mongoUrl: `${process.env.MONGODB_URI}`, // MongoDB URL
     collectionName: 'sessions', // Optional: name of the collection to store sessions
+    ttl: 30 * 24 * 60 * 60 // 30 days in seconds
   }),
-
-  cookie: { secure: true, maxAge: 1000 * 60 * 60 * 24 * 30, sameSite: 'none' }
+  cookie: { 
+    secure: true, 
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
+    sameSite: 'none' 
+  }
 }));
+
 
 // Routes
 app.use('/api', event_route);
