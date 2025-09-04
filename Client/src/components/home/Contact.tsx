@@ -71,7 +71,7 @@ const Contact = () => {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
             {/* Contact Form */}
             <AnimatedSection animation="fade-in" className="lg:col-span-3">
-              <div className="bg-white dark:bg-card rounded-2xl shadow-soft p-8">
+              <div className="bg-white dark:bg-card rounded-2xl shadow-soft dark:shadow-[#333] dark:shadow-sm p-8">
                 <h3 className="text-2xl font-display font-semibold mb-6 dark:text-white">Send us a message</h3>
                 <form onSubmit={onSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -166,7 +166,7 @@ const Contact = () => {
                         {item.icon}
                       </div>
                       <div className="flex flex-col">
-                        <h4 className="font-medium mb-0.5 text-white dark:text-white text-start">{item.title}</h4>
+                        <h4 className="font-medium mb-0.5  dark:text-white t text-start">{item.title}</h4>
                         <p className="text-sm text-muted-foreground dark:text-gray-300">
                           {item.details}
                         </p>

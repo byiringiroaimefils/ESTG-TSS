@@ -22,6 +22,7 @@ const Announcement = () => {
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const toggleExpand = (id) => {
     setExpandedItems((prev) => ({
@@ -47,11 +48,14 @@ const Announcement = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const response = await axios.get(`${API_URL}/all_updates`);
         setData(response.data.data);
         setFiltered(response.data.data);
       } catch (error) {
         console.error('Error fetching updates:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -59,20 +63,26 @@ const Announcement = () => {
     fetchData();
   }, []);
 
+  // Skeleton Card Component
+  const SkeletonCard = () => (
+    <div className="rounded-sm border overflow-hidden shadow-md p-6">
+      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-2 animate-pulse" />
+      <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2 animate-pulse" />
+      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mt-2 animate-pulse" />
+      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 mt-2 animate-pulse" />
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-background">
       {/* 🔍 SEO + Social Media Meta Tags */}
       <Helmet>
         <title>Updates | ESTG-TSS</title>
         <meta key="description" name="description" content="Stay informed with the latest updates, announcements, and achievements from ESTG-TSS. Check back regularly for important news and developments." />
-
-        {/* Open Graph Meta Tags */}
         <meta key="og:title" property="og:title" content="Updates | ESTG-TSS" />
         <meta key="og:description" property="og:description" content="Get the latest updates and announcements from ESTG-TSS. Stay connected with our school community and never miss important news." />
         <meta key="og:url" property="og:url" content="https://estg-tss.vercel.app/updates" />
         <meta key="og:image" property="og:image" content="https://estg-tss.vercel.app/assets/hero_image.jpg" />
-
-        {/* Twitter Card Meta Tags */}
         <meta key="twitter:card" name="twitter:card" content="summary_large_image" />
         <meta key="twitter:title" name="twitter:title" content="Updates | ESTG-TSS" />
         <meta key="twitter:description" name="twitter:description" content="Read the latest updates and announcements from ESTG-TSS. Stay up to date with our school’s news and achievements." />
@@ -96,13 +106,19 @@ const Announcement = () => {
             value={searchTerm}
             onChange={handleSearch}
             placeholder="Search announcements..."
-            className="w-full px-12 py-3 rounded-md shadow-sm shadow-gray-400 bg-white dark:bg-black border border-gray-300 dark:border-gray-700"
+            className="w-full outline-none px-12 py-3 rounded-md bg-white dark:bg-black border border-gray-300 dark:border-gray-700"
           />
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-300 w-5 h-5" />
         </div>
 
-        {/* CONDITIONAL MESSAGES */}
-        {data.length === 0 ? (
+        {isLoading ? (
+          <div className="grid gap-8 grid-cols-1 md:grid-cols-3 max-w-[89%] mx-auto px-6">
+            {/* Display 6 skeleton cards while loading */}
+            {[...Array(6)].map((_, index) => (
+              <SkeletonCard key={index} />
+            ))}
+          </div>
+        ) : data.length === 0 ? (
           // No announcements in the database
           <div className="flex flex-col items-center justify-center py-24 text-center max-w-xl mx-auto">
             <svg
@@ -151,7 +167,7 @@ const Announcement = () => {
         ) : (
           // Matching results found
           <>
-            <div className="grid gap-8 grid-cols-1 md:grid-cols-3 max-w-[90%] mx-auto px-6 container">
+            <div className="grid gap-8 grid-cols-1 md:grid-cols-3 max-w-[89%] mx-auto px-6">
               {filtered.slice(0, visibleNewsCount).map((item) => {
                 const isExpanded = expandedItems[item._id];
                 const description = item.description;
@@ -161,44 +177,45 @@ const Announcement = () => {
                 return (
                   <div
                     key={item._id}
-                    className="group w-auto transition-all duration-300 ease-in-out p-6 mb-6 dark:bg-gray-900 dark:text-gray-100 rounded-2xl shadow-lg hover:shadow-xl flex flex-col items-start text-left justify-between"
+                    className="rounded-sm border overflow-hidden shadow-md hover:shadow-xl transition duration-300 p-6"
                   >
-                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200 uppercase">
-                      {item.title}
-                    </h2>
-                    <p className="text-sm text-gray-800 mb-2 dark:text-gray-300">
-                      {new Date(item.createdAt).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })}
-                    </p>
-                    <p className="text-gray-600 text-left dark:text-gray-300 leading-relaxed">
-                      {isExpanded ? description : shortText}
-                    </p>
-                    {description.length > 150 && (
-                      <button
-                        onClick={() => toggleExpand(item._id)}
-                        className="mt-2 text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none"
-                      >
-                        {isExpanded ? 'Show Less' : 'Show More'}
-                      </button>
-                    )}
-                    {/* Download Option for fileUrl */}
-                    {item.fileUrl && (
-                      <a
-                        href={item.fileUrl}
-                        download={`${item.title}.pdf`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm mt-3 text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-2"
-                      >
-                        📥 Download Attachment
-                      </a>
-                    )}
-                    <p className="text-sm text-gray-600 text-left mt-4 p-3 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-2 hover:border-gray-600 hover:cursor-pointer rounded-lg">
-                      # {item.type}
-                    </p>
+                    <div className="text-left">
+                      <p className="text-sm text-black dark:text-white mb-2">
+                        {new Date(item.createdAt).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
+                      </p>
+                      <h3 className="text-lg font-semibold text-black dark:text-white uppercase mb-2">
+                        {item.title}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        {isExpanded ? description : shortText}
+                      </p>
+                      {description.length > 150 && (
+                        <button
+                          onClick={() => toggleExpand(item._id)}
+                          className="mt-2 text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none"
+                        >
+                          {isExpanded ? 'Show Less' : 'Show More...'}
+                        </button>
+                      )}
+                      {item.fileUrl && (
+                        <a
+                          href={item.fileUrl}
+                          download={`${item.title}.pdf`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm mt-3 text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-2"
+                        >
+                          📥 Download Attachment
+                        </a>
+                      )}
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-4">
+                        # {item.type}
+                      </p>
+                    </div>
                   </div>
                 );
               })}

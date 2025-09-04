@@ -9,14 +9,6 @@ import { Helmet } from "react-helmet";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-interface ImportMetaEnv {
-  readonly VITE_API_URL: string
-}
-
-interface ImportMeta {
-  readonly env: ImportMetaEnv
-}
-
 interface ProfileData {
   user: string;
   email: string;
@@ -46,19 +38,14 @@ function Profile() {
   const fetchProfileData = async () => {
     try {
       setIsLoading(true);
-      const token = localStorage.getItem('token');
       const response = await axios.get(`${API_URL}/account/dashboard`, {
         withCredentials: true,
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
       });
       setProfileData(response.data);
-    } catch (err) {
+    } catch (err: any) {
       setError('Failed to fetch profile data');
       console.error('Profile data fetch error:', err);
       if (err.response?.status === 401) {
-        localStorage.clear();
         navigate('/login');
       }
     } finally {
@@ -73,9 +60,6 @@ function Profile() {
   const handleLogout = async () => {
     try {
       await axios.get(`${API_URL}/account/logout`, { withCredentials: true });
-      localStorage.removeItem("username");
-      localStorage.removeItem("role");
-      localStorage.removeItem("email");
       navigate('/');
     } catch (error) {
       console.error('Logout error:', error);
@@ -96,20 +80,17 @@ function Profile() {
       <Helmet>
         <title>Admin Panel | ESTG-TSS</title>
         <meta name="description" content="Manage updates, events, and content creators from the admin panel of ESTG-TSS." />
-
-        {/* Open Graph Meta Tags */}
         <meta property="og:title" content="Admin Panel | ESTG-TSS" />
         <meta property="og:description" content="Control content and users from the admin panel of ESTG-TSS." />
         <meta property="og:url" content="https://estg-tss.vercel.app/admin" />
         <meta property="og:image" content="https://estg-tss.vercel.app/assets/hero_image.jpg" />
-
-        {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Admin Panel | ESTG-TSS" />
         <meta name="twitter:description" content="Control content and users from the admin panel of ESTG-TSS." />
         <meta name="twitter:image" content="https://estg-tss.vercel.app/assets/hero_image.jpg" />
       </Helmet>
-      <div className="bg-white dark:bg-black dark:shadow-gray-800 rounded-lg shadow-lg p-6">
+
+      <div className="bg-white dark:bg-black shadow-sm dark:shadow-[#333] shadow-gray-400 rounded-lg p-6">
         <div className="flex flex-col items-center">
           <Avatar className="h-24 w-24 mb-4">
             <AvatarImage
@@ -122,10 +103,10 @@ function Profile() {
           </Avatar>
 
           <h2 className="text-2xl font-bold mb-1 dark:text-white">
-            {profileData?.user || localStorage.getItem("username")}
+            {profileData?.user}
           </h2>
           <p className="text-gray-500 dark:text-gray-400 mb-4">
-            {profileData?.email || localStorage.getItem("email")}
+            {profileData?.email}
           </p>
 
           <div className="w-full max-w-md">
@@ -140,7 +121,7 @@ function Profile() {
                     <button
                       onClick={() => {
                         setIsEditingEmail(!isEditingEmail);
-                        setNewEmail(profileData?.email || localStorage.getItem("email") || '');
+                        setNewEmail(profileData?.email || '');
                       }}
                       className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
                     >
@@ -174,9 +155,7 @@ function Profile() {
                       </button>
                     </div>
                   ) : (
-                    <p className="text-gray-900 dark:text-white">
-                      {profileData?.email || localStorage.getItem("email")}
-                    </p>
+                    <p className="text-gray-900 dark:text-white">{profileData?.email}</p>
                   )}
                 </div>
 
@@ -187,7 +166,7 @@ function Profile() {
                     <button
                       onClick={() => {
                         setIsEditingUsername(!isEditingUsername);
-                        setNewUsername(profileData?.user || localStorage.getItem("username") || '');
+                        setNewUsername(profileData?.user || '');
                       }}
                       className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
                     >
@@ -221,9 +200,7 @@ function Profile() {
                       </button>
                     </div>
                   ) : (
-                    <p className="text-gray-900 dark:text-white">
-                      {profileData?.user || localStorage.getItem("username")}
-                    </p>
+                    <p className="text-gray-900 dark:text-white">{profileData?.user}</p>
                   )}
                 </div>
 
@@ -300,7 +277,8 @@ function Profile() {
                     <p className="text-gray-500 dark:text-gray-400">********</p>
                   )}
                 </div>
-                {/* Backup Code Section */}
+
+                {/* Backup Code */}
                 <div>
                   <div className="flex items-center justify-between">
                     <label className="text-sm text-gray-500 dark:text-gray-400">Backup Code</label>
@@ -319,6 +297,7 @@ function Profile() {
                     </div>
                   )}
                 </div>
+
               </div>
             </div>
           </div>

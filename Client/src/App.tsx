@@ -79,7 +79,7 @@ const App = () => (
             <Route path="/contentcreatorregistration" element={<ContentCreatorRegistration />} />
             <Route path="/forgetpassword" element={<ForgetPassword />} />
             <Route path="/update/:id" element={<UpdateForm />} />
-            <Route path="/Events/:id" element={<EventsDetail />} />
+            <Route path="/Event/:id" element={<EventsDetail />} />
             <Route path="/editeevent/:id" element={<EditEventForm />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

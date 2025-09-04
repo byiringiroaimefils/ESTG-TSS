@@ -156,7 +156,7 @@ const EditEventForm = () => {
       </button>
 
       <div className="flex-grow flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-md space-y-8 p-8 rounded-lg shadow-md shadow-gray-400 bg-white dark:bg-black border border-gray-200 dark:border-gray-700">
+        <div className="w-full max-w-md space-y-8 p-8 rounded-lg shadow-sm dark:shadow-[#333] shadow-gray-400 bg-white dark:bg-black border border-gray-200 dark:border-gray-700">
           <div className="text-center">
             <h1 className="text-3xl font-bold dark:text-gray-200 text-gray-800">
               Edit Event
