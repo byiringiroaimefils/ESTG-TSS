@@ -106,7 +106,7 @@ const Footer = () => {
         rel="noopener noreferrer"
         className="underline decoration-dotted hover:text-estg-blue transition-colors inline-flex items-center space-x-1"
       >
-        <span>Powered by Notify Code.inc</span>
+        <span>Powered by DHMA Digital Co</span>
         <ExternalLink size={14} className="ml-1" />
       </a>
     </p>
